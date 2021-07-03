@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>used_cars_template</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>voters_example</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14259,7 +14259,7 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Used-Car-Dealer">Used Car Dealer<a class="anchor-link" href="#Used-Car-Dealer">&#182;</a></h1>
+<h1 id="Classification">Classification<a class="anchor-link" href="#Classification">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14271,8 +14271,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>You take the role of a used car dealer. You have a database with prices and characteristics of used cars you sold previously (<em>use_car_database.csv</em>). You want to use this data to predict the prices of the used cars that are currently in your garage. For these cars you have a data set containing the characteristics (<em>new_used_cars.csv</em>), but not the prices. The characteristics that you observe in the data sets are described in the file <em>variable_description.xlsx</em>.</p>
-<p>Your task is to predict the used car prices of the used cars that are currently in your garage using any method of your choice.</p>
+<p>We have data on voter turnout of the 2002 house of representative election. The outcome variable <em>vote02</em> is a binary indicator: 1 indicates participation and 0 non-participation in the 2002 election. We want to predict who participates in the election based on the characteristics age, gender, and previous participation in the 1998 and 2000 elections.</p>
 
 </div>
 </div>
@@ -14283,7 +14282,7 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Load Packages and Data  ########################</span>
@@ -14291,13 +14290,10 @@ a.anchor-link {
 <span class="c1"># Load packages</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">rpart</span><span class="p">)</span>
 <span class="nf">library</span><span class="p">(</span><span class="n">rpart.plot</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">grf</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">glmnet</span><span class="p">)</span>
-<span class="nf">library</span><span class="p">(</span><span class="n">nnet</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">neuralnet</span><span class="p">)</span>
 
 <span class="c1"># Load data</span>
-<span class="n">cars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;used_car_database.csv&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
-<span class="n">new_cars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;new_used_cars.csv&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
+<span class="n">voters</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;voters02.csv&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;Packages and data successfully loaded.&#39;</span><span class="p">)</span>
 
@@ -14313,22 +14309,6 @@ a.anchor-link {
 
 
 <div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>Warning message:
-&#34;package &#39;rpart.plot&#39; was built under R version 3.6.3&#34;Warning message:
-&#34;package &#39;grf&#39; was built under R version 3.6.3&#34;Warning message:
-&#34;package &#39;glmnet&#39; was built under R version 3.6.3&#34;Loading required package: Matrix
-Loaded glmnet 4.1-1
-</pre>
-</div>
-</div>
 
 <div class="jp-OutputArea-child">
 
@@ -14354,16 +14334,16 @@ Loaded glmnet 4.1-1
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Describe Old Data  ########################</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Describe Data  ########################</span>
 
 <span class="c1"># Print first few rows of old data</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">voters</span><span class="p">)</span>
 
 <span class="c1"># Number of observations</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;Old data: &#39;</span><span class="p">,</span><span class="nf">nrow</span><span class="p">(</span><span class="n">cars</span><span class="p">),</span><span class="s">&#39; observations&#39;</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;Old data: &#39;</span><span class="p">,</span><span class="nf">nrow</span><span class="p">(</span><span class="n">voters</span><span class="p">),</span><span class="s">&#39; observations&#39;</span><span class="p">))</span>
 
 <span class="c1">######################################################################</span>
 </pre></div>
@@ -14387,14 +14367,14 @@ Loaded glmnet 4.1-1
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
 <table>
-<thead><tr><th scope=col>id</th><th scope=col>sales_price</th><th scope=col>mercedes_c</th><th scope=col>vw_golf</th><th scope=col>vw_passat</th><th scope=col>bmw_320</th><th scope=col>opel_astra</th><th scope=col>diesel</th><th scope=col>other_car_owner</th><th scope=col>pm_green</th><th scope=col>...</th><th scope=col>mile_40</th><th scope=col>mile_50</th><th scope=col>mile_100</th><th scope=col>mile_150</th><th scope=col>mileage</th><th scope=col>mileage2</th><th scope=col>age_3</th><th scope=col>age_6</th><th scope=col>age_car_years</th><th scope=col>age_car_years2</th></tr></thead>
+<thead><tr><th scope=col>vote02</th><th scope=col>age</th><th scope=col>female</th><th scope=col>vote00</th><th scope=col>vote98</th></tr></thead>
 <tbody>
-	<tr><td>52927    </td><td>12.060   </td><td>0        </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>1        </td><td>2        </td><td>1        </td><td>...      </td><td>1        </td><td>1        </td><td>1        </td><td>0        </td><td>149.000  </td><td>22201.000</td><td>1        </td><td>1        </td><td>9.0      </td><td>81.00    </td></tr>
-	<tr><td>49185    </td><td>21.121   </td><td>0        </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>1        </td><td>1        </td><td>1        </td><td>...      </td><td>1        </td><td>0        </td><td>0        </td><td>0        </td><td> 42.000  </td><td> 1764.000</td><td>0        </td><td>0        </td><td>1.2      </td><td> 1.44    </td></tr>
-	<tr><td>64639    </td><td>31.700   </td><td>0        </td><td>0        </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>1        </td><td>1        </td><td>...      </td><td>0        </td><td>0        </td><td>0        </td><td>0        </td><td> 14.300  </td><td>  204.490</td><td>0        </td><td>0        </td><td>1.7      </td><td> 2.89    </td></tr>
-	<tr><td>11372    </td><td>14.240   </td><td>1        </td><td>0        </td><td>0        </td><td>0        </td><td>0        </td><td>0        </td><td>2        </td><td>1        </td><td>...      </td><td>1        </td><td>1        </td><td>0        </td><td>0        </td><td> 56.161  </td><td> 3154.058</td><td>1        </td><td>1        </td><td>6.4      </td><td>40.96    </td></tr>
-	<tr><td> 7593    </td><td>20.350   </td><td>0        </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>1        </td><td>1        </td><td>1        </td><td>...      </td><td>1        </td><td>1        </td><td>1        </td><td>0        </td><td>101.482  </td><td>10298.596</td><td>1        </td><td>0        </td><td>4.3      </td><td>18.49    </td></tr>
-	<tr><td>89992    </td><td>11.679   </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>0        </td><td>0        </td><td>2        </td><td>1        </td><td>...      </td><td>1        </td><td>1        </td><td>0        </td><td>0        </td><td> 71.544  </td><td> 5118.544</td><td>1        </td><td>1        </td><td>7.0      </td><td>49.00    </td></tr>
+	<tr><td>1 </td><td>43</td><td>1 </td><td>1 </td><td>0 </td></tr>
+	<tr><td>1 </td><td>33</td><td>1 </td><td>1 </td><td>0 </td></tr>
+	<tr><td>1 </td><td>37</td><td>0 </td><td>1 </td><td>0 </td></tr>
+	<tr><td>0 </td><td>41</td><td>0 </td><td>1 </td><td>0 </td></tr>
+	<tr><td>1 </td><td>45</td><td>0 </td><td>0 </td><td>0 </td></tr>
+	<tr><td>0 </td><td>49</td><td>1 </td><td>0 </td><td>0 </td></tr>
 </tbody>
 </table>
 
@@ -14409,7 +14389,7 @@ Loaded glmnet 4.1-1
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;Old data: 48976 observations&#34;
+<pre>[1] &#34;Old data: 3000 observations&#34;
 </pre>
 </div>
 </div>
@@ -14418,128 +14398,6 @@ Loaded glmnet 4.1-1
 
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Describe New Data  ########################</span>
-
-<span class="c1"># Print first few rows of new data</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">new_cars</span><span class="p">)</span>
-
-<span class="c1"># Number of observations</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;New data: &#39;</span><span class="p">,</span><span class="nf">nrow</span><span class="p">(</span><span class="n">new_cars</span><span class="p">),</span><span class="s">&#39; observations&#39;</span><span class="p">))</span>
-
-<span class="c1">######################################################################</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<table>
-<thead><tr><th scope=col>id</th><th scope=col>mercedes_c</th><th scope=col>vw_golf</th><th scope=col>vw_passat</th><th scope=col>bmw_320</th><th scope=col>opel_astra</th><th scope=col>diesel</th><th scope=col>other_car_owner</th><th scope=col>pm_green</th><th scope=col>private_seller</th><th scope=col>...</th><th scope=col>mile_40</th><th scope=col>mile_50</th><th scope=col>mile_100</th><th scope=col>mile_150</th><th scope=col>mileage</th><th scope=col>mileage2</th><th scope=col>age_3</th><th scope=col>age_6</th><th scope=col>age_car_years</th><th scope=col>age_car_years2</th></tr></thead>
-<tbody>
-	<tr><td>104720    </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>1         </td><td>...       </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td> 40.000   </td><td> 1600.0000</td><td>0         </td><td>0         </td><td>2.5       </td><td> 6.25     </td></tr>
-	<tr><td> 32761    </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>1         </td><td>...       </td><td>1         </td><td>1         </td><td>1         </td><td>0         </td><td>139.800   </td><td>19544.0400</td><td>1         </td><td>0         </td><td>5.7       </td><td>32.49     </td></tr>
-	<tr><td> 32601    </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>...       </td><td>1         </td><td>1         </td><td>1         </td><td>0         </td><td>134.000   </td><td>17956.0000</td><td>1         </td><td>1         </td><td>8.9       </td><td>79.21     </td></tr>
-	<tr><td> 53732    </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>1         </td><td>2         </td><td>1         </td><td>0         </td><td>...       </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td> 34.850   </td><td> 1214.5225</td><td>0         </td><td>0         </td><td>1.6       </td><td> 2.56     </td></tr>
-	<tr><td>  3655    </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td>1         </td><td>1         </td><td>1         </td><td>0         </td><td>...       </td><td>1         </td><td>1         </td><td>0         </td><td>0         </td><td> 90.142   </td><td> 8125.5802</td><td>1         </td><td>0         </td><td>4.9       </td><td>24.01     </td></tr>
-	<tr><td> 98140    </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>1         </td><td>1         </td><td>1         </td><td>0         </td><td>...       </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td> 31.299   </td><td>  979.6274</td><td>0         </td><td>0         </td><td>1.2       </td><td> 1.44     </td></tr>
-</tbody>
-</table>
-
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;New data: 1024 observations&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Prepare-Data">Prepare Data<a class="anchor-link" href="#Prepare-Data">&#182;</a></h2>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Data Preparation  ########################</span>
-
-<span class="c1"># Generate outcome and control variables</span>
-<span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">cars</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span>
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">cars</span><span class="p">[,</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)])</span>
-<span class="n">new_x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">new_cars</span><span class="p">[,</span><span class="m">-1</span><span class="p">])</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="s">&#39;Data is prepared.&#39;</span><span class="p">)</span>
-
-<span class="c1">#############################################################################</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;Data is prepared.&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>$\Rightarrow$ It is possible to add non-linear and interaction terms.</strong></p>
-
-</div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
@@ -14548,15 +14406,16 @@ Loaded glmnet 4.1-1
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Training and Test Samples  ########################</span>
 
-<span class="nf">set.seed</span><span class="p">(</span><span class="o">???</span><span class="p">)</span>
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">1001</span><span class="p">)</span>
 
 <span class="c1"># Generate variable with the rows in training data</span>
-<span class="o">???</span>
+<span class="n">size</span> <span class="o">&lt;-</span> <span class="nf">floor</span><span class="p">(</span><span class="m">0.5</span> <span class="o">*</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">voters</span><span class="p">))</span>
+<span class="n">training_set</span> <span class="o">&lt;-</span> <span class="nf">sample</span><span class="p">(</span><span class="nf">seq_len</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">voters</span><span class="p">)),</span> <span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;Training and test samples created.&#39;</span><span class="p">)</span>
 
@@ -14592,201 +14451,43 @@ Loaded glmnet 4.1-1
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Lasso,-Ridge,-Elastic-Net">Lasso, Ridge, Elastic Net<a class="anchor-link" href="#Lasso,-Ridge,-Elastic-Net">&#182;</a></h2>
+<h2 id="ClassificationTree">ClassificationTree<a class="anchor-link" href="#ClassificationTree">&#182;</a></h2>
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[15]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  LASSO, Ridge, Elastic Net  ##############################</span>
+<div class=" highlight hl-r"><pre><span></span><span class="c1">######################  Classification Tree  #######################</span>
 
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">27112019</span><span class="p">)</span>
 
-                                   
-<span class="c1">################################################################</span>
-</pre></div>
+<span class="c1"># Classification Tree</span>
+<span class="n">deep_tree</span> <span class="o">&lt;-</span> <span class="nf">rpart</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="n">vote02</span> <span class="o">~</span> <span class="n">.</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">voters</span><span class="p">[</span><span class="n">training_set</span><span class="p">,],</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;class&quot;</span><span class="p">,</span>
+                <span class="n">xval</span> <span class="o">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="nf">rpart.control</span><span class="p">(</span><span class="n">cp</span> <span class="o">=</span> <span class="m">0.00002</span><span class="p">,</span> <span class="n">minbucket</span><span class="o">=</span><span class="m">15</span><span class="p">))</span>
+<span class="c1"># Uses Gini index instead of MSE as model accuracy measure</span>
 
-     </div>
-</div>
-</div>
-</div>
+<span class="c1"># Optimal tree size</span>
+<span class="n">op.index</span> <span class="o">&lt;-</span> <span class="nf">which.min</span><span class="p">(</span><span class="n">deep_tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[,</span> <span class="s">&quot;xerror&quot;</span><span class="p">])</span>
 
-<div class="jp-Cell-outputWrapper">
+<span class="c1">## Select the Tree that Minimises CV-MSE</span>
+<span class="n">cp.vals</span> <span class="o">&lt;-</span> <span class="n">deep_tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[</span><span class="n">op.index</span><span class="p">,</span> <span class="s">&quot;CP&quot;</span><span class="p">]</span>
 
+<span class="c1"># Prune the deep tree</span>
+<span class="n">pruned_tree</span> <span class="o">&lt;-</span> <span class="nf">prune</span><span class="p">(</span><span class="n">deep_tree</span><span class="p">,</span> <span class="n">cp</span> <span class="o">=</span> <span class="n">cp.vals</span><span class="p">)</span>
 
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Penalized Regression: 0.781&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Tree">Tree<a class="anchor-link" href="#Tree">&#182;</a></h2>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">######################  Regression Tree  #######################</span>
-
-
-
-<span class="c1">################################################################</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Tree: 0.849&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Random-Forest">Random Forest<a class="anchor-link" href="#Random-Forest">&#182;</a></h2>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Random Forest  #######################</span>
-
-
-<span class="c1">################################################################</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Forest: 0.876&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Select-Favorite-Model-and-Extrapolate-to-New-Data">Select Favorite Model and Extrapolate to New Data<a class="anchor-link" href="#Select-Favorite-Model-and-Extrapolate-to-New-Data">&#182;</a></h2>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Out-of-Sample Prediction  #######################</span>
+<span class="c1">## Plot tree structure</span>
+<span class="nf">rpart.plot</span><span class="p">(</span><span class="n">pruned_tree</span><span class="p">,</span><span class="n">digits</span><span class="o">=</span><span class="m">3</span><span class="p">)</span>
 
 <span class="c1"># Fitted values</span>
-<span class="n">new_prediction</span> <span class="o">&lt;-</span> <span class="o">???</span>
+<span class="n">predtree</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">pruned_tree</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span> <span class="n">voters</span><span class="p">)</span>
+<span class="n">pred_vote_tree</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">predtree</span><span class="p">[,</span><span class="m">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="m">0.5</span> <span class="p">)</span>
 
-<span class="nf">print</span><span class="p">(</span><span class="s">&#39;Out-of-sample sales are predicted.&#39;</span><span class="p">)</span>
+<span class="c1"># Calculate the Error Rate</span>
+<span class="n">error_rate_tree</span> <span class="o">&lt;-</span> <span class="nf">round</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">voters</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">pred_vote_tree</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">])),</span> <span class="n">digits</span> <span class="o">=</span> <span class="m">4</span><span class="p">)</span>
 
-<span class="c1">###########################################################################</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;Out-of-sample sales are predicted.&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Store-Out-of-Sample-Predictions">Store Out-of-Sample Predictions<a class="anchor-link" href="#Store-Out-of-Sample-Predictions">&#182;</a></h2>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Store Results  #######################</span>
-
-<span class="n">id_new</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">new_cars</span><span class="o">$</span><span class="n">id</span><span class="p">)</span>
-
-<span class="c1"># Replace ??? with your name</span>
-<span class="nf">write.csv</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">id_new</span><span class="p">,</span><span class="n">new_prediction</span><span class="p">),</span><span class="s">&quot;???.csv&quot;</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="s">&#39;File is stored.&#39;</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="s">&#39;Send your results to anthony.strittmatter@ensae.fr&#39;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;Error Rate Tree: &quot;</span><span class="p">,</span> <span class="n">error_rate_tree</span><span class="p">))</span>
 
 <span class="c1">################################################################</span>
 </pre></div>
@@ -14808,8 +14509,330 @@ Loaded glmnet 4.1-1
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;File is stored.&#34;
-[1] &#34;Send your results to anthony.strittmatter@ensae.fr&#34;
+<pre>[1] &#34;Error Rate Tree: 0.252&#34;
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+<strong>png:</strong> 3
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+<div class="jp-RenderedImage jp-OutputArea-output ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0gAAANICAMAAADKOT/pAAABa1BMVEUAAAAgNEEjOyMrR1cv
+UDAwPUQ0VGg2RDQ4Xzk7X3Y8Qkg/bEFAUlxAaYFDR0tFSkRGcoxGdkdJXEZLepZMgE1NTU1N
+Ym1PgZ5RWWFRiVJTh6dWkVdXbVRXb3xXjq5aYGVamVxblLZdZFtemb1eoGBfeohganRhn8Ni
+pmRjfF9lpMpmrWhnhJNoaGhqs2trrtZscnhteINtiGltuW9ujZ1vd210xHZ1lqd2k3F4hJF6
+gYh7na98fHx+h3t+nXmBj5yBpbeFp4CGjpWGq7+KmaeLlIeLssaMjIyMr4eQuM2RmqKTorGT
+t42VvtSWoJOZv5Oampqaq7qbpK2eyuGfxpigq52hssOkrrekzZ6np6eousup1KOqtaatt8Cv
+wdOysrKyv6604a21wMm1yNq6zuG7yLe9vb29yNLC0L7Ez9rG2+/Hx8fK2MXL1uHQ0NDR3enR
+4MzY59PZ2dne6/fh4eHl9eDp6enw8PD///8gSHnHAAAACXBIWXMAABJ0AAASdAHeZh94AAAg
+AElEQVR4nO2d+YPVRNZACxRRQEDHdkVxxI2lceETFVtRZ7TdcFqHUXpQEEUcAUVQ6P7zv1Rl
+Xx5J3rvp5Fad88MjnZfuzq17D5XUq1SbTQBYGDP2CQD4ACIBCIBIAAIgEoAAiAQgACIBCIBI
+AAIgEoAAiAQgACIBCIBIAAIgEoAAiAQgACIBCIBIAAIgEoAAiAQgACIBCIBIAAIgEoAAiAQg
+ACIBCIBIAAIgEoAAiAQgACIBCIBIAAIgEoAAiAQgACIBCIBIAAIgEoAAiAQgACIBCIBIAAIg
+EoAAiAQgACIBCIBIAAIgEoAAiAQgACIBCIBIAAIgEoAAiAQgACIBCIBIAAIgEoAAiAQgACIB
+CIBIvmLmZ+xT1wiN5iHOhtvzg0z9ocG8YyGHijKNHYgqaC3PkNEodmnsWDRBY/mFnEbWJKqj
+MzSVV4h6dJtOqTu0lE9Ie4RInaGlfEJcJEzqCg3lEfIeIVJXaCiPGEAkTOoI7eQPQ3iESB2h
+nfxhEJEwqRs0kzcM4xEidYNm8oYeIn3XRzpKpAu0kjd0l+N6r3lElEgXaCVv6CzH9X2IJA6t
+5Aud3fjOvNFvZis10gEayRc6u2G+vI1I4tBIvtD9yu42IslDI/lCr9seRJKGRvIFRBoVGskX
+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
+AiASgACIBCAAIgEIgEhbzHL8tPnG+pJZWt8Y+2xACkTaWi7GyzZsLLkFHJbujH0+IAQiDc3v
+q4Uv7iTrn6wZc2XzmjFrY50VCINIw3JlubRw0Eoi0vrq0qZbgGik0wJpEKk3f0XdiVm55baj
+O521jcSH+l3PnfXKClxXzGrx6+jabitOGLYAROrLrWSBOmuS62CWYzeSu57cpN+tNGblWr5n
+I3o7F2lj1V7fgR8gUl+WzbVNe3uzkrxurDg3Llq1rhhzMT+ubFHEavStmUhWMzzyBkSaD+fD
+quuXbrntFSeI8ys9YulW+XuumdXCfZEVjbEGb9AoUs9FggWJf//GlbW4F0r2pNvFY2JRli8W
+x7eX7HVf4Yj1rP8aJxrDWIccKkUa7Cd3YjUrQnM3kZJ7pNylNXtNWBRpY/TBBkQSQ2O5j5v+
+dXfr0yRS7dDyqF29Ixi9S0AkMTSW+7jpN8nNUP0eqWmaQuFzpKJIqyvxD1neuvNuApHE0Fju
+46Z/ydqz7uSpjNqtWadWq8f/Xt5j0pkN1+y3jzxsh0hiaCz3cdN/0fUpS64Dcp8jxSJtLMf7
+22bPmeJcu5WWg4cGkcTQWO4jp//Kklm+shGPXUc903p6q3MxUmmtdRaqyWd/L4/+MRIiiaGx
+3KeW/tFvdeZmai2pGI3lPpn0R73LX3YCXdQr6WQyLakfjeU+mfRfTAbhlrQ+oDeZltSPxnKf
+Tvqv2c9cl/U+6DqdllSPxnIn/VLQkmJoLHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S
+0JJiaCx30i8FLSmGxnIn/VLQkmJoLHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJi
+aCx30i8FLSmGxnIn/VLQkmJoLHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx3
+0i8FLSmGxnIn/VLQkmJoLHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8F
+LSmGxnIn/VLQkmJoLHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8FLSmG
+xnIn/VLQkmJoLHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8FLSmGxnIn
+/VLQkmJoLHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8FLSmGxnIn/VLQ
+kmJoLHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8FLSmGxnIn/VLQkmJo
+LHfSLwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8FLSmGxnIn/VLQkmJoLHfS
+LwUtKYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8FLSmGxnIn/VLQkmJoLHfSLwUt
+KYbGcif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8FLSmGxnIn/VLQkmJoLHfSLwUtKYbG
+cif9UtCSYmgsd9IvBS0phsZyJ/1S0JJiaCx30i8FLSmGxnIn/VLQkmJoLHfSLwUtKYbGcif9
+vTH9GPt0FaKx3MlzL6wZf/YDmXqjsdzJcQ96S1SQaexz14TGcifBnZlbo9ilsU9fERrLnfx2
+ZSGNXK80dgRq0FjuZLcji3pEp9QdjeVOcrsh4BEmdUVjuZPbToh4hEgd0Vju5LYTMiJhUjc0
+ljup7YKQR5jUDY3lTmY7IOYRInVCY7mT2Q7IiYRJXdBY7iS2HUGPEKkLGsudxLbTQaTP9pq9
+n93AJBk0ljt5baddpFfdPO+DiCSDxnInr+20ivSL2fvrn7/uNb8gkggay528ttMq0mfmx+j1
+e/M1IomgsdzJazutIp0yv0Wvv5pTiCSCxnInr+20ipQ8YNHpOQsavB2N5U5e20GkLUZjuZPX
+dhBpi9FY7uS1HUTaYjSWO3ltp9WPvYgkisZyJ6/tdBy1+41ROyE0ljt5badVpK/d50g/ms8Q
+SQSN5U5e22FmwxajsdzJazvttz4H3Vy7Vzt4hEgd0Fju5LWddpFuuNnfXTxCpA5oLHfy2o7k
+80iI1AGN5U5e20GkLUZjuZPXdhBpi9FY7uS1HUTaYjSWO3ltB5G2GI3lTl7bQaQtRmO5k9d2
+EGmL0Vju5LUdRNpiNJY7eW0HkbYYjeVOXtupilRdxO7Gh8Z8+KuzJMV+8avd/Rsi9UdjuZPX
+dioi1Rax2+t2/FoQae+fdjK426quGkmDt6Ox3MlrO2WRalO9PzMf2pf8YaQf3Xt7o8NunKo9
+WkGDt6Ox3MlrO2WRaovY7TU3/iw+Hntj7yl3gFXohuucEKkfGsudvLZTFmnGIna5MaecWB+6
+a706NHg7GsudvLZTFql5pZPPzLfJ1q/x1dxB8+fXe82HtYX1afB2NJY7eW2nXaTvTX4vFHdI
+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"
+>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h2 id="Neural-Network">Neural Network<a class="anchor-link" href="#Neural-Network">&#182;</a></h2>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Neural Net  #######################</span>
+
+<span class="nf">set.seed</span><span class="p">(</span><span class="m">27112019</span><span class="p">)</span>
+
+<span class="n">replication</span> <span class="o">=</span> <span class="m">1</span> <span class="c1"># number of replications</span>
+<span class="n">neurons</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+
+<span class="n">nnet</span> <span class="o">&lt;-</span> <span class="nf">neuralnet</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="n">vote02</span> <span class="o">~</span><span class="n">.</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">voters</span><span class="p">[</span><span class="n">training_set</span><span class="p">,],</span> <span class="n">hidden</span> <span class="o">=</span> <span class="n">neurons</span><span class="p">,</span> 
+                 <span class="n">act.fct</span> <span class="o">=</span> <span class="s">&quot;logistic&quot;</span><span class="p">,</span> <span class="n">rep</span><span class="o">=</span> <span class="n">replication</span><span class="p">,</span> <span class="n">linear.output</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">)</span>
+
+<span class="nf">plot</span><span class="p">(</span><span class="n">nnet</span><span class="p">)</span>
+
+<span class="c1"># Fitted values</span>
+<span class="n">prednet</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">nnet</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">voters</span><span class="p">)</span>
+<span class="n">pred_vote_net</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">prednet</span> <span class="o">&gt;</span> <span class="m">0.5</span> <span class="p">)</span>
+
+<span class="c1"># Calculate the Error Rate</span>
+<span class="n">error_rate_net</span> <span class="o">&lt;-</span> <span class="nf">round</span><span class="p">(</span><span class="nf">mean</span><span class="p">((</span><span class="n">voters</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">,</span><span class="m">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">pred_vote_net</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">])),</span> <span class="n">digits</span> <span class="o">=</span> <span class="m">4</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;Error Rate Neural Net: &quot;</span><span class="p">,</span> <span class="n">error_rate_net</span><span class="p">))</span>
+
+<span class="c1">################################################################</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+<div class="jp-Cell-outputWrapper">
+
+
+<div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[1] &#34;Error Rate Neural Net: 0.2493&#34;
 </pre>
 </div>
 </div>

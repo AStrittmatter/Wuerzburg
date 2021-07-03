@@ -25,7 +25,7 @@ print(paste0('Old data: ',nrow(cars),' observations'))
 
 ######################################################################
 
-########################  Describe Old Data  ########################
+########################  Describe New Data  ########################
 
 # Print first few rows of new data
 head(new_cars)
