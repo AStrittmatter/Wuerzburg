@@ -27,3 +27,4 @@ dependencies:
   - r-dplyr
   - r-sandwich
   - r-diagrammer
+  - r-neuralnet
