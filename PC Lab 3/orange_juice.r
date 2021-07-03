@@ -170,7 +170,6 @@ id_new <- as.matrix(new_grocery$id)
 write.csv(cbind(id_new,new_prediction),"???.csv")
 
 print('File is stored.')
-print('Send your results to anthony.strittmatter@ensae.fr')
 
 ################################################################
 

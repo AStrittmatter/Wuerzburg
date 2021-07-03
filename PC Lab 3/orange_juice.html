@@ -14259,7 +14259,7 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Wholesale-Manager">Wholesale Manager<a class="anchor-link" href="#Wholesale-Manager">&#182;</a></h1>
+<h1 id="Home-Assignment:-Wholesale-Manager">Home Assignment: Wholesale Manager<a class="anchor-link" href="#Home-Assignment:-Wholesale-Manager">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14271,7 +14271,7 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>You manage a wholesale store. The data file juice.csv contains orange juice sales (sales) and prices (price) of dierent grocery stores that you deliver. Your product range contains three different orange juice brands: Tropicana, Minute Maid, and Dominicks. Some stores advertise/feature specific orange juice brands, which is indicated by the dummy variable feat. The data contains also the store ID (id). You deliver new grocery stores. The new stores sent you the file new grocery.csv, which
+<p>You manage a wholesale store. The data file juice.csv contains orange juice sales (sales) and prices (price) of different grocery stores that you deliver. Your product range contains three different orange juice brands: Tropicana, Minute Maid, and Dominicks. Some stores advertise/feature specific orange juice brands, which is indicated by the dummy variable feat. The data contains also the store ID (id). You deliver new grocery stores. The new stores sent you the file new grocery.csv, which
 contains the planned prices and advertisements for the different brands. Your job as wholesale manager is to predict the sales of the new grocery stores and deliver the right amount of orange juice.</p>
 
 </div>
@@ -14283,7 +14283,7 @@ contains the planned prices and advertisements for the different brands. Your jo
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Load Packages and Data  ########################</span>
@@ -14312,6 +14312,22 @@ contains the planned prices and advertisements for the different brands. Your jo
 
 
 <div class="jp-OutputArea jp-Cell-outputArea">
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>Warning message:
+&#34;package &#39;rpart.plot&#39; was built under R version 3.6.3&#34;Warning message:
+&#34;package &#39;grf&#39; was built under R version 3.6.3&#34;Warning message:
+&#34;package &#39;glmnet&#39; was built under R version 3.6.3&#34;Loading required package: Matrix
+Loaded glmnet 4.1-1
+</pre>
+</div>
+</div>
 
 <div class="jp-OutputArea-child">
 
@@ -14614,8 +14630,13 @@ contains the planned prices and advertisements for the different brands. Your jo
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;Training and test samples created.&#34;
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>
+Error in parse(text = x, srcfile = src): &lt;text&gt;:3:13: unexpected &#39;)&#39;
+2: 
+3: set.seed(???)
+               ^
+Traceback:
 </pre>
 </div>
 </div>
@@ -14629,10 +14650,10 @@ contains the planned prices and advertisements for the different brands. Your jo
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Predict-Orange-Juice-Prices-in-Training-Sample-and-Assess-Model-in-Test-Sample">Predict Orange Juice Prices in Training Sample and Assess Model in Test Sample<a class="anchor-link" href="#Predict-Orange-Juice-Prices-in-Training-Sample-and-Assess-Model-in-Test-Sample">&#182;</a></h2>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  LASSO, Ridge, Elastic Net  ##############################</span>
@@ -14658,31 +14679,10 @@ contains the planned prices and advertisements for the different brands. Your jo
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Penalized Regression: 0.278&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[11]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">######################  Regression Tree  #######################</span>
@@ -14723,31 +14723,10 @@ contains the planned prices and advertisements for the different brands. Your jo
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Tree: 0.365&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Random Forest  #######################</span>
@@ -14779,36 +14758,15 @@ contains the planned prices and advertisements for the different brands. Your jo
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Forest: 0.411&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Select-Favorite-Model-and-Extrapolate-to-New-Data">Select Favorite Model and Extrapolate to New Data<a class="anchor-link" href="#Select-Favorite-Model-and-Extrapolate-to-New-Data">&#182;</a></h2>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Out-of-Sample Prediction  #######################</span>
@@ -14826,36 +14784,15 @@ contains the planned prices and advertisements for the different brands. Your jo
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;Out-of-sample sales are predicted.&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
-</div>
-
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Store-Out-of-Sample-Predictions">Store Out-of-Sample Predictions<a class="anchor-link" href="#Store-Out-of-Sample-Predictions">&#182;</a></h2>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Store Results  #######################</span>
@@ -14866,7 +14803,6 @@ contains the planned prices and advertisements for the different brands. Your jo
 <span class="nf">write.csv</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">id_new</span><span class="p">,</span><span class="n">new_prediction</span><span class="p">),</span><span class="s">&quot;???.csv&quot;</span><span class="p">)</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;File is stored.&#39;</span><span class="p">)</span>
-<span class="nf">print</span><span class="p">(</span><span class="s">&#39;Send your results to anthony.strittmatter@unibas.ch&#39;</span><span class="p">)</span>
 
 <span class="c1">################################################################</span>
 </pre></div>
@@ -14874,28 +14810,6 @@ contains the planned prices and advertisements for the different brands. Your jo
      </div>
 </div>
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;File is stored.&#34;
-[1] &#34;Send your results to anthony.strittmatter@unibas.ch&#34;
-</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">

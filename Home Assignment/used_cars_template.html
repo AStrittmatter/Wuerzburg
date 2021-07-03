@@ -3,7 +3,7 @@
 <head><meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>orange_juice_example_solution</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>used_cars_template</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 
 
 
@@ -14259,7 +14259,7 @@ a.anchor-link {
 
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Wholesale-Manager">Wholesale Manager<a class="anchor-link" href="#Wholesale-Manager">&#182;</a></h1>
+<h1 id="Used-Car-Dealer">Used Car Dealer<a class="anchor-link" href="#Used-Car-Dealer">&#182;</a></h1>
 </div>
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
@@ -14271,7 +14271,8 @@ a.anchor-link {
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>You take the role of a wholesale store manager. The data file juice.csv contains orange juice sales (sales) and prices (price) of different grocery stores that you deliver. Your product range contains three different orange juice brands: Tropicana, Minute Maid, and Dominicks. Some stores advertise/feature specific orange juice brands, which is indicated by the dummy variable feat. The data contains also the store ID (id). You deliver new grocery stores. The new stores sent you the file new grocery.csv, which contains the planned prices and advertisements for the different brands. Your job as wholesale manager is to predict the sales of the new grocery stores and deliver the right amount of orange juice.</p>
+<p>You take the role of a used car dealer. You have a database with prices and characteristics of used cars you sold previously (<em>use_car_database.csv</em>). You want to use this data to predict the prices of the used cars that are currently in your garage. For these cars you have a data set containing the characteristics (<em>new_used_cars.csv</em>), but not the prices. The characteristics that you observe in the data sets are described in the file <em>variable_description.xlsx</em>.</p>
+<p>Your task is to predict the used car prices of the used cars that are currently in your garage using any method of your choice.</p>
 
 </div>
 </div>
@@ -14295,8 +14296,8 @@ a.anchor-link {
 <span class="nf">library</span><span class="p">(</span><span class="n">nnet</span><span class="p">)</span>
 
 <span class="c1"># Load data</span>
-<span class="n">juice</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;juice.csv&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
-<span class="n">new_grocery</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;new_grocery.csv&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
+<span class="n">cars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;used_car_database.csv&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
+<span class="n">new_cars</span> <span class="o">&lt;-</span> <span class="nf">read.csv</span><span class="p">(</span><span class="s">&quot;new_used_cars.csv&quot;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&quot;,&quot;</span><span class="p">)</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;Packages and data successfully loaded.&#39;</span><span class="p">)</span>
 
@@ -14359,10 +14360,10 @@ Loaded glmnet 4.1-1
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Describe Old Data  ########################</span>
 
 <span class="c1"># Print first few rows of old data</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">juice</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">cars</span><span class="p">)</span>
 
 <span class="c1"># Number of observations</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;Old data: &#39;</span><span class="p">,</span><span class="nf">nrow</span><span class="p">(</span><span class="n">juice</span><span class="p">),</span><span class="s">&#39; observations&#39;</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;Old data: &#39;</span><span class="p">,</span><span class="nf">nrow</span><span class="p">(</span><span class="n">cars</span><span class="p">),</span><span class="s">&#39; observations&#39;</span><span class="p">))</span>
 
 <span class="c1">######################################################################</span>
 </pre></div>
@@ -14386,14 +14387,14 @@ Loaded glmnet 4.1-1
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
 <table>
-<thead><tr><th scope=col>X</th><th scope=col>id</th><th scope=col>sales</th><th scope=col>price</th><th scope=col>brand</th><th scope=col>feat</th></tr></thead>
+<thead><tr><th scope=col>id</th><th scope=col>sales_price</th><th scope=col>mercedes_c</th><th scope=col>vw_golf</th><th scope=col>vw_passat</th><th scope=col>bmw_320</th><th scope=col>opel_astra</th><th scope=col>diesel</th><th scope=col>other_car_owner</th><th scope=col>pm_green</th><th scope=col>...</th><th scope=col>mile_40</th><th scope=col>mile_50</th><th scope=col>mile_100</th><th scope=col>mile_150</th><th scope=col>mileage</th><th scope=col>mileage2</th><th scope=col>age_3</th><th scope=col>age_6</th><th scope=col>age_car_years</th><th scope=col>age_car_years2</th></tr></thead>
 <tbody>
-	<tr><td>1          </td><td>1140       </td><td> 11970     </td><td>2.47       </td><td>minute.maid</td><td>0          </td></tr>
-	<tr><td>3          </td><td>7182       </td><td> 30205     </td><td>1.57       </td><td>dominicks  </td><td>1          </td></tr>
-	<tr><td>4          </td><td>1741       </td><td>  3521     </td><td>2.55       </td><td>minute.maid</td><td>0          </td></tr>
-	<tr><td>5          </td><td>1725       </td><td> 11777     </td><td>1.41       </td><td>dominicks  </td><td>0          </td></tr>
-	<tr><td>6          </td><td>7565       </td><td>129151     </td><td>2.05       </td><td>minute.maid</td><td>1          </td></tr>
-	<tr><td>8          </td><td>5617       </td><td>  7104     </td><td>3.74       </td><td>tropicana  </td><td>0          </td></tr>
+	<tr><td>52927    </td><td>12.060   </td><td>0        </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>1        </td><td>2        </td><td>1        </td><td>...      </td><td>1        </td><td>1        </td><td>1        </td><td>0        </td><td>149.000  </td><td>22201.000</td><td>1        </td><td>1        </td><td>9.0      </td><td>81.00    </td></tr>
+	<tr><td>49185    </td><td>21.121   </td><td>0        </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>1        </td><td>1        </td><td>1        </td><td>...      </td><td>1        </td><td>0        </td><td>0        </td><td>0        </td><td> 42.000  </td><td> 1764.000</td><td>0        </td><td>0        </td><td>1.2      </td><td> 1.44    </td></tr>
+	<tr><td>64639    </td><td>31.700   </td><td>0        </td><td>0        </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>1        </td><td>1        </td><td>...      </td><td>0        </td><td>0        </td><td>0        </td><td>0        </td><td> 14.300  </td><td>  204.490</td><td>0        </td><td>0        </td><td>1.7      </td><td> 2.89    </td></tr>
+	<tr><td>11372    </td><td>14.240   </td><td>1        </td><td>0        </td><td>0        </td><td>0        </td><td>0        </td><td>0        </td><td>2        </td><td>1        </td><td>...      </td><td>1        </td><td>1        </td><td>0        </td><td>0        </td><td> 56.161  </td><td> 3154.058</td><td>1        </td><td>1        </td><td>6.4      </td><td>40.96    </td></tr>
+	<tr><td> 7593    </td><td>20.350   </td><td>0        </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>1        </td><td>1        </td><td>1        </td><td>...      </td><td>1        </td><td>1        </td><td>1        </td><td>0        </td><td>101.482  </td><td>10298.596</td><td>1        </td><td>0        </td><td>4.3      </td><td>18.49    </td></tr>
+	<tr><td>89992    </td><td>11.679   </td><td>0        </td><td>1        </td><td>0        </td><td>0        </td><td>0        </td><td>0        </td><td>2        </td><td>1        </td><td>...      </td><td>1        </td><td>1        </td><td>0        </td><td>0        </td><td> 71.544  </td><td> 5118.544</td><td>1        </td><td>1        </td><td>7.0      </td><td>49.00    </td></tr>
 </tbody>
 </table>
 
@@ -14408,7 +14409,7 @@ Loaded glmnet 4.1-1
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;Old data: 9685 observations&#34;
+<pre>[1] &#34;Old data: 48976 observations&#34;
 </pre>
 </div>
 </div>
@@ -14426,10 +14427,10 @@ Loaded glmnet 4.1-1
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Describe Old Data  ########################</span>
 
 <span class="c1"># Print first few rows of new data</span>
-<span class="nf">head</span><span class="p">(</span><span class="n">new_grocery</span><span class="p">)</span>
+<span class="nf">head</span><span class="p">(</span><span class="n">new_cars</span><span class="p">)</span>
 
 <span class="c1"># Number of observations</span>
-<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;New data: &#39;</span><span class="p">,</span><span class="nf">nrow</span><span class="p">(</span><span class="n">new_grocery</span><span class="p">),</span><span class="s">&#39; observations&#39;</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;New data: &#39;</span><span class="p">,</span><span class="nf">nrow</span><span class="p">(</span><span class="n">new_cars</span><span class="p">),</span><span class="s">&#39; observations&#39;</span><span class="p">))</span>
 
 <span class="c1">######################################################################</span>
 </pre></div>
@@ -14453,14 +14454,14 @@ Loaded glmnet 4.1-1
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
 <table>
-<thead><tr><th scope=col>X</th><th scope=col>id</th><th scope=col>price</th><th scope=col>brand</th><th scope=col>feat</th></tr></thead>
+<thead><tr><th scope=col>id</th><th scope=col>mercedes_c</th><th scope=col>vw_golf</th><th scope=col>vw_passat</th><th scope=col>bmw_320</th><th scope=col>opel_astra</th><th scope=col>diesel</th><th scope=col>other_car_owner</th><th scope=col>pm_green</th><th scope=col>private_seller</th><th scope=col>...</th><th scope=col>mile_40</th><th scope=col>mile_50</th><th scope=col>mile_100</th><th scope=col>mile_150</th><th scope=col>mileage</th><th scope=col>mileage2</th><th scope=col>age_3</th><th scope=col>age_6</th><th scope=col>age_car_years</th><th scope=col>age_car_years2</th></tr></thead>
 <tbody>
-	<tr><td> 2         </td><td>10171      </td><td>1.81       </td><td>dominicks  </td><td>1          </td></tr>
-	<tr><td> 7         </td><td> 7489      </td><td>  NA       </td><td>tropicana  </td><td>0          </td></tr>
-	<tr><td>10         </td><td> 7559      </td><td>3.29       </td><td>tropicana  </td><td>0          </td></tr>
-	<tr><td>11         </td><td> 1236      </td><td>1.77       </td><td>minute.maid</td><td>1          </td></tr>
-	<tr><td>16         </td><td> 5361      </td><td>1.53       </td><td>dominicks  </td><td>0          </td></tr>
-	<tr><td>17         </td><td>  108      </td><td>1.42       </td><td>dominicks  </td><td>0          </td></tr>
+	<tr><td>104720    </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>1         </td><td>...       </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td> 40.000   </td><td> 1600.0000</td><td>0         </td><td>0         </td><td>2.5       </td><td> 6.25     </td></tr>
+	<tr><td> 32761    </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>1         </td><td>...       </td><td>1         </td><td>1         </td><td>1         </td><td>0         </td><td>139.800   </td><td>19544.0400</td><td>1         </td><td>0         </td><td>5.7       </td><td>32.49     </td></tr>
+	<tr><td> 32601    </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>...       </td><td>1         </td><td>1         </td><td>1         </td><td>0         </td><td>134.000   </td><td>17956.0000</td><td>1         </td><td>1         </td><td>8.9       </td><td>79.21     </td></tr>
+	<tr><td> 53732    </td><td>0         </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>1         </td><td>2         </td><td>1         </td><td>0         </td><td>...       </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td> 34.850   </td><td> 1214.5225</td><td>0         </td><td>0         </td><td>1.6       </td><td> 2.56     </td></tr>
+	<tr><td>  3655    </td><td>0         </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td>1         </td><td>1         </td><td>1         </td><td>0         </td><td>...       </td><td>1         </td><td>1         </td><td>0         </td><td>0         </td><td> 90.142   </td><td> 8125.5802</td><td>1         </td><td>0         </td><td>4.9       </td><td>24.01     </td></tr>
+	<tr><td> 98140    </td><td>1         </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td>1         </td><td>1         </td><td>1         </td><td>0         </td><td>...       </td><td>0         </td><td>0         </td><td>0         </td><td>0         </td><td> 31.299   </td><td>  979.6274</td><td>0         </td><td>0         </td><td>1.2       </td><td> 1.44     </td></tr>
 </tbody>
 </table>
 
@@ -14475,7 +14476,7 @@ Loaded glmnet 4.1-1
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;New data: 3262 observations&#34;
+<pre>[1] &#34;New data: 1024 observations&#34;
 </pre>
 </div>
 </div>
@@ -14497,35 +14498,10 @@ Loaded glmnet 4.1-1
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Data Preparation  ########################</span>
 
-<span class="c1"># Generate dummy for missing prices</span>
-<span class="n">missing</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">juice</span><span class="o">$</span><span class="n">price</span><span class="p">)</span> <span class="o">==</span> <span class="kc">TRUE</span><span class="p">)</span>
-<span class="n">new_missing</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">new_grocery</span><span class="o">$</span><span class="n">price</span><span class="p">)</span> <span class="o">==</span> <span class="kc">TRUE</span><span class="p">)</span>
-
-<span class="c1"># Replace missing prices with zero</span>
-<span class="n">juice</span><span class="o">$</span><span class="n">price</span><span class="p">[</span><span class="nf">is.na</span><span class="p">(</span><span class="n">juice</span><span class="o">$</span><span class="n">price</span><span class="p">)]</span> <span class="o">&lt;-</span><span class="m">0</span>
-<span class="n">new_grocery</span><span class="o">$</span><span class="n">price</span><span class="p">[</span><span class="nf">is.na</span><span class="p">(</span><span class="n">new_grocery</span><span class="o">$</span><span class="n">price</span><span class="p">)]</span> <span class="o">&lt;-</span><span class="m">0</span>
-
-<span class="c1"># Generate Dummies for Brands</span>
-<span class="n">brand_1</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">juice</span><span class="o">$</span><span class="n">brand</span> <span class="o">==</span> <span class="s">&quot;minute.maid&quot;</span><span class="p">)</span>
-<span class="n">brand_2</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">juice</span><span class="o">$</span><span class="n">brand</span> <span class="o">==</span> <span class="s">&quot;dominicks&quot;</span><span class="p">)</span>
-<span class="n">brand_3</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">juice</span><span class="o">$</span><span class="n">brand</span> <span class="o">==</span> <span class="s">&quot;tropicana&quot;</span><span class="p">)</span>
-
-<span class="n">new_brand_1</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">new_grocery</span><span class="o">$</span><span class="n">brand</span> <span class="o">==</span> <span class="s">&quot;minute.maid&quot;</span><span class="p">)</span>
-<span class="n">new_brand_2</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">new_grocery</span><span class="o">$</span><span class="n">brand</span> <span class="o">==</span> <span class="s">&quot;dominicks&quot;</span><span class="p">)</span>
-<span class="n">new_brand_3</span> <span class="o">&lt;-</span> <span class="p">(</span><span class="n">new_grocery</span><span class="o">$</span><span class="n">brand</span> <span class="o">==</span> <span class="s">&quot;tropicana&quot;</span><span class="p">)</span>
-
 <span class="c1"># Generate outcome and control variables</span>
-<span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">juice</span><span class="o">$</span><span class="n">sales</span><span class="p">)</span>
-<span class="nf">colnames</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;sales&quot;</span><span class="p">)</span>
-
-<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">juice</span><span class="o">$</span><span class="n">price</span><span class="p">,</span> <span class="n">missing</span><span class="p">,</span> <span class="n">brand_1</span><span class="p">,</span> <span class="n">brand_2</span><span class="p">,</span> <span class="n">brand_3</span><span class="p">,</span> <span class="n">juice</span><span class="o">$</span><span class="n">feat</span><span class="p">))</span>
-<span class="nf">colnames</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;price&quot;</span><span class="p">,</span> <span class="s">&quot;missing&quot;</span><span class="p">,</span> <span class="s">&quot;minute.maid&quot;</span><span class="p">,</span> <span class="s">&quot;dominicks&quot;</span><span class="p">,</span> <span class="s">&quot;tropicana&quot;</span><span class="p">,</span> <span class="s">&quot;featured&quot;</span><span class="p">)</span>
-
-<span class="n">new_x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">new_grocery</span><span class="o">$</span><span class="n">price</span><span class="p">,</span> <span class="n">new_missing</span><span class="p">,</span> <span class="n">new_brand_1</span><span class="p">,</span> <span class="n">new_brand_2</span><span class="p">,</span> <span class="n">new_brand_3</span><span class="p">,</span> <span class="n">new_grocery</span><span class="o">$</span><span class="n">feat</span><span class="p">))</span>
-<span class="nf">colnames</span><span class="p">(</span><span class="n">new_x</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&quot;price&quot;</span><span class="p">,</span> <span class="s">&quot;missing&quot;</span><span class="p">,</span> <span class="s">&quot;minute.maid&quot;</span><span class="p">,</span> <span class="s">&quot;dominicks&quot;</span><span class="p">,</span> <span class="s">&quot;tropicana&quot;</span><span class="p">,</span> <span class="s">&quot;featured&quot;</span><span class="p">)</span>
-
-<span class="c1"># Descriptive statistics</span>
-<span class="nf">summary</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">cars</span><span class="p">[,</span><span class="m">2</span><span class="p">])</span>
+<span class="n">x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">cars</span><span class="p">[,</span><span class="o">-</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)])</span>
+<span class="n">new_x</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">new_cars</span><span class="p">[,</span><span class="m">-1</span><span class="p">])</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;Data is prepared.&#39;</span><span class="p">)</span>
 
@@ -14541,33 +14517,6 @@ Loaded glmnet 4.1-1
 
 
 <div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output " data-mime-type="text/plain">
-<pre>     sales            price          missing         minute.maid    
- Min.   :    63   Min.   :0.000   Min.   :0.00000   Min.   :0.0000  
- 1st Qu.:  4800   1st Qu.:1.710   1st Qu.:0.00000   1st Qu.:0.0000  
- Median :  8256   Median :2.120   Median :0.00000   Median :0.0000  
- Mean   : 17023   Mean   :2.174   Mean   :0.04801   Mean   :0.3284  
- 3rd Qu.: 16896   3rd Qu.:2.720   3rd Qu.:0.00000   3rd Qu.:1.0000  
- Max.   :716415   Max.   :4.170   Max.   :1.00000   Max.   :1.0000  
-   dominicks        tropicana        featured     
- Min.   :0.0000   Min.   :0.000   Min.   :0.0000  
- 1st Qu.:0.0000   1st Qu.:0.000   1st Qu.:0.0000  
- Median :0.0000   Median :0.000   Median :0.0000  
- Mean   :0.3405   Mean   :0.331   Mean   :0.2355  
- 3rd Qu.:1.0000   3rd Qu.:1.000   3rd Qu.:0.0000  
- Max.   :1.0000   Max.   :1.000   Max.   :1.0000  </pre>
-</div>
-
-</div>
 
 <div class="jp-OutputArea-child">
 
@@ -14599,16 +14548,15 @@ Loaded glmnet 4.1-1
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[5]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[26]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Training and Test Samples  ########################</span>
 
-<span class="nf">set.seed</span><span class="p">(</span><span class="m">1001</span><span class="p">)</span>
+<span class="nf">set.seed</span><span class="p">(</span><span class="o">???</span><span class="p">)</span>
 
 <span class="c1"># Generate variable with the rows in training data</span>
-<span class="n">size</span> <span class="o">&lt;-</span> <span class="nf">floor</span><span class="p">(</span><span class="m">0.5</span> <span class="o">*</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">juice</span><span class="p">))</span>
-<span class="n">training_set</span> <span class="o">&lt;-</span> <span class="nf">sample</span><span class="p">(</span><span class="nf">seq_len</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">juice</span><span class="p">)),</span> <span class="n">size</span> <span class="o">=</span> <span class="n">size</span><span class="p">)</span>
+<span class="o">???</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;Training and test samples created.&#39;</span><span class="p">)</span>
 
@@ -14654,24 +14602,12 @@ Loaded glmnet 4.1-1
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[27]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  LASSO, Ridge, Elastic Net  ##############################</span>
 
-<span class="nf">set.seed</span><span class="p">(</span><span class="m">27112019</span><span class="p">)</span>
-<span class="n">penalized.cv</span> <span class="o">&lt;-</span> <span class="nf">cv.glmnet</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">training_set</span><span class="p">,],</span><span class="n">y</span><span class="p">[</span><span class="n">training_set</span><span class="p">],</span> 
-                      <span class="n">type.measure</span> <span class="o">=</span> <span class="s">&quot;mse&quot;</span><span class="p">,</span> <span class="n">family</span> <span class="o">=</span> <span class="s">&quot;gaussian&quot;</span><span class="p">,</span> <span class="n">nfolds</span> <span class="o">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">)</span>
 
-
-<span class="c1"># Fitted values</span>
-<span class="n">pred_penalized</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">penalized.cv</span><span class="p">,</span> <span class="n">newx</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">penalized.cv</span><span class="o">$</span><span class="n">lambda.min</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="m">0.5</span><span class="p">)</span>
-
-<span class="c1"># Calculate the MSE</span>
-<span class="n">MSE_penalized</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">((</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">]</span> <span class="o">-</span> <span class="n">pred_penalized</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">])</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="n">R2_penalized</span> <span class="o">&lt;-</span> <span class="nf">round</span><span class="p">(</span><span class="m">1</span><span class="o">-</span> <span class="n">MSE_penalized</span><span class="o">/</span><span class="nf">var</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">]),</span> <span class="n">digits</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;R-squared Penalized Regression: &quot;</span><span class="p">,</span> <span class="n">R2_penalized</span><span class="p">))</span>
                                    
 <span class="c1">################################################################</span>
 </pre></div>
@@ -14693,7 +14629,7 @@ Loaded glmnet 4.1-1
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Penalized Regression: 0.278&#34;
+<pre>[1] &#34;R-squared Penalized Regression: 0.781&#34;
 </pre>
 </div>
 </div>
@@ -14710,39 +14646,12 @@ Loaded glmnet 4.1-1
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[28]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">######################  Regression Tree  #######################</span>
 
-<span class="nf">set.seed</span><span class="p">(</span><span class="m">27112019</span><span class="p">)</span>
-<span class="c1"># Prepare data for tree estimator</span>
-<span class="n">outcome</span> <span class="o">&lt;-</span> <span class="n">y</span><span class="p">[</span><span class="n">training_set</span><span class="p">]</span>
-<span class="n">tree_data</span> <span class="o">&lt;-</span> <span class="nf">data.frame</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">training_set</span><span class="p">,])</span>
 
-<span class="n">deep_tree</span> <span class="o">&lt;-</span> <span class="nf">rpart</span><span class="p">(</span><span class="n">formula</span> <span class="o">=</span> <span class="n">outcome</span> <span class="o">~</span> <span class="n">.</span><span class="p">,</span> <span class="n">data</span> <span class="o">=</span> <span class="n">tree_data</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s">&quot;anova&quot;</span><span class="p">,</span>
-                <span class="n">xval</span> <span class="o">=</span> <span class="m">10</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">control</span> <span class="o">=</span> <span class="nf">rpart.control</span><span class="p">(</span><span class="n">cp</span> <span class="o">=</span> <span class="m">0.00002</span><span class="p">,</span> <span class="n">minbucket</span><span class="o">=</span><span class="m">10</span><span class="p">))</span>
-
-<span class="c1"># Optimal tree size</span>
-<span class="n">op.index</span> <span class="o">&lt;-</span> <span class="nf">which.min</span><span class="p">(</span><span class="n">deep_tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[,</span> <span class="s">&quot;xerror&quot;</span><span class="p">])</span>
-
-<span class="c1">## Select the Tree that Minimises CV-MSE</span>
-<span class="n">cp.vals</span> <span class="o">&lt;-</span> <span class="n">deep_tree</span><span class="o">$</span><span class="n">cptable</span><span class="p">[</span><span class="n">op.index</span><span class="p">,</span> <span class="s">&quot;CP&quot;</span><span class="p">]</span>
-
-<span class="c1"># Prune the deep tree</span>
-<span class="n">pruned_tree</span> <span class="o">&lt;-</span> <span class="nf">prune</span><span class="p">(</span><span class="n">deep_tree</span><span class="p">,</span> <span class="n">cp</span> <span class="o">=</span> <span class="n">cp.vals</span><span class="p">)</span>
-
-<span class="c1">## Plot tree structure</span>
-<span class="c1">#rpart.plot(pruned_tree,digits=3)</span>
-
-<span class="c1"># Fitted values</span>
-<span class="n">predtree</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">pruned_tree</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span> <span class="nf">as.data.frame</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-
-<span class="c1"># Calculate the MSE</span>
-<span class="n">MSEtree</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">((</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">]</span> <span class="o">-</span> <span class="n">predtree</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">])</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="n">R2tree</span> <span class="o">&lt;-</span> <span class="nf">round</span><span class="p">(</span><span class="m">1</span><span class="o">-</span> <span class="n">MSEtree</span><span class="o">/</span><span class="nf">var</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">]),</span> <span class="n">digits</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;R-squared Tree: &quot;</span><span class="p">,</span> <span class="n">R2tree</span><span class="p">))</span>
 
 <span class="c1">################################################################</span>
 </pre></div>
@@ -14764,7 +14673,7 @@ Loaded glmnet 4.1-1
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Tree: 0.365&#34;
+<pre>[1] &#34;R-squared Tree: 0.849&#34;
 </pre>
 </div>
 </div>
@@ -14781,30 +14690,11 @@ Loaded glmnet 4.1-1
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[29]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Random Forest  #######################</span>
 
-<span class="nf">set.seed</span><span class="p">(</span><span class="m">27112019</span><span class="p">)</span>
-
-<span class="n">rep</span> <span class="o">&lt;-</span> <span class="m">1000</span> <span class="c1"># number of trees</span>
-<span class="n">cov</span> <span class="o">&lt;-</span> <span class="m">2</span><span class="o">/</span><span class="m">3</span> <span class="c1"># share of covariates</span>
-<span class="n">frac</span> <span class="o">&lt;-</span> <span class="m">1</span><span class="o">/</span><span class="m">2</span> <span class="c1"># fraction of subsample</span>
-<span class="n">min_obs</span> <span class="o">&lt;-</span> <span class="m">10</span> <span class="c1"># max. size of terminal leaves in trees</span>
-
-<span class="c1"># Build Forest</span>
-<span class="n">forest</span> <span class="o">&lt;-</span> <span class="nf">regression_forest</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">training_set</span><span class="p">,],</span><span class="n">y</span><span class="p">[</span><span class="n">training_set</span><span class="p">,],</span> <span class="n">mtry</span> <span class="o">=</span> <span class="nf">floor</span><span class="p">(</span><span class="n">cov</span><span class="o">*</span><span class="nf">ncol</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">sample.fraction</span> <span class="o">=</span> <span class="n">frac</span><span class="p">,</span>
-            <span class="n">num.trees</span> <span class="o">=</span> <span class="n">rep</span><span class="p">,</span><span class="n">min.node.size</span> <span class="o">=</span> <span class="n">min_obs</span><span class="p">,</span> <span class="n">honesty</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)</span>
-
-<span class="c1"># Fitted values</span>
-<span class="n">predforest</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">x</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
-
-<span class="c1"># Calculate MSE</span>
-<span class="n">MSEforest</span> <span class="o">&lt;-</span> <span class="nf">mean</span><span class="p">((</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">]</span> <span class="o">-</span> <span class="n">predforest</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">])</span><span class="o">^</span><span class="m">2</span><span class="p">)</span>
-<span class="n">R2forest</span> <span class="o">&lt;-</span> <span class="nf">round</span><span class="p">(</span><span class="m">1</span><span class="o">-</span> <span class="n">MSEforest</span><span class="o">/</span><span class="nf">var</span><span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="n">training_set</span><span class="p">]),</span> <span class="n">digits</span> <span class="o">=</span> <span class="m">3</span><span class="p">)</span>
-
-<span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&quot;R-squared Forest: &quot;</span><span class="p">,</span> <span class="n">R2forest</span><span class="p">))</span>
 
 <span class="c1">################################################################</span>
 </pre></div>
@@ -14826,7 +14716,7 @@ Loaded glmnet 4.1-1
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>[1] &#34;R-squared Forest: 0.411&#34;
+<pre>[1] &#34;R-squared Forest: 0.876&#34;
 </pre>
 </div>
 </div>
@@ -14843,14 +14733,13 @@ Loaded glmnet 4.1-1
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[30]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Out-of-Sample Prediction  #######################</span>
 
 <span class="c1"># Fitted values</span>
-<span class="c1"># We select Random Forest because highest R-squared</span>
-<span class="n">new_prediction</span> <span class="o">&lt;-</span> <span class="nf">predict</span><span class="p">(</span><span class="n">forest</span><span class="p">,</span> <span class="n">newdata</span><span class="o">=</span><span class="n">new_x</span><span class="p">)</span><span class="o">$</span><span class="n">predictions</span>
+<span class="n">new_prediction</span> <span class="o">&lt;-</span> <span class="o">???</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;Out-of-sample sales are predicted.&#39;</span><span class="p">)</span>
 
@@ -14891,17 +14780,18 @@ Loaded glmnet 4.1-1
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[10]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[32]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">########################  Store Results  #######################</span>
 
-<span class="n">id_new</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">new_grocery</span><span class="o">$</span><span class="n">id</span><span class="p">)</span>
+<span class="n">id_new</span> <span class="o">&lt;-</span> <span class="nf">as.matrix</span><span class="p">(</span><span class="n">new_cars</span><span class="o">$</span><span class="n">id</span><span class="p">)</span>
 
-<span class="c1"># Replace ??? with your group name</span>
-<span class="nf">write.csv</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">id_new</span><span class="p">,</span><span class="n">new_prediction</span><span class="p">),</span><span class="s">&quot;strittmatter.csv&quot;</span><span class="p">)</span>
+<span class="c1"># Replace ??? with your name</span>
+<span class="nf">write.csv</span><span class="p">(</span><span class="nf">cbind</span><span class="p">(</span><span class="n">id_new</span><span class="p">,</span><span class="n">new_prediction</span><span class="p">),</span><span class="s">&quot;???.csv&quot;</span><span class="p">)</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;File is stored.&#39;</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">&#39;Send your results to anthony.strittmatter@ensae.fr&#39;</span><span class="p">)</span>
 
 <span class="c1">################################################################</span>
 </pre></div>
@@ -14924,6 +14814,7 @@ Loaded glmnet 4.1-1
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
 <pre>[1] &#34;File is stored.&#34;
+[1] &#34;Send your results to anthony.strittmatter@ensae.fr&#34;
 </pre>
 </div>
 </div>
