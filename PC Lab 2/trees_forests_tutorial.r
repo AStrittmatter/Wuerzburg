@@ -21,26 +21,18 @@ print('Packages and data successfully loaded.')
 
 #############################################################################
 
+head(data_2006)
+
 ########################  Average Spending  ########################
 
-spending <- round(???, digits=2)
+spending <- round(mean(y_2006), digits=2)
 print(paste0("In 2006, the average spending is ", spending, " US-dollars"))
 
 ####################################################################
 
-########################  Online Time  ########################
-
-freq <- round(x_2006[id_2006==921,x_2006[id_2006==921,] == ???], digit = 0)
-page <- names(freq)
-
-print(paste0("Household 921 is most of the time on the webpage ", page))
-print(paste0(freq, "% of the online time is the household on this webpage"))
-
-################################################################
-
 ########################  Log Transformation  ########################
 
-log_y_2006 = as.matrix(???) # take logarithm
+log_y_2006 = as.matrix(log(y_2006)) # take logarithm
 
 # Cumulative Distribution of Spending
 plot(ecdf(y_2006), xlab = "Spending in US-Dollars", sub = "(Truncated at 20,000 US-Dollars)",
@@ -72,8 +64,8 @@ tree_data_2006 <-  data.frame(outcome, x_2006[training_set,])
 set.seed(1001)
 shallow_tree <- rpart(formula = outcome ~., data = tree_data_2006, method = "anova", xval = 10,
                              y = TRUE, control = rpart.control(cp = 0.00002, minbucket=150))
-# Note: 'minbucket=100' imposes the restriction that each terminal leave should contain at least 100 observations. 
-# The algorithm 'rpart' stops growing trees when either one leave has less than 100 observations or 
+# Note: 'minbucket=150' imposes the restriction that each terminal leave should contain at least 150 observations. 
+# The algorithm 'rpart' stops growing trees when either one leave has less than 150 observations or 
 # the MSE gain of addidng one addidtional leave is below cp=0.00002.
 
 ## Plot tree structure
@@ -192,8 +184,8 @@ print(paste0("Test sample R-squared: ", r2_1))
 
 sizes <- c(1000,500,400,300, 200, 100, 50, 40,30,20,10, 5,4,3,2,1) # Select a grid of sample sizes
 # Prepare matrix to store results
-auc <- matrix(NA, nrow = length(sizes), ncol = 3)
-colnames(auc) <- c("Trees", "AUC", "Marginal AUC")
+auc <- matrix(NA, nrow = length(sizes), ncol = 2)
+colnames(auc) <- c("Trees", "AUC")
 auc[,1] <- sizes
 # Sum of Squares Total
 SST <- mean(((log_y_2006[-training_set,])-(mean(log_y_2006[-training_set,])))^2)
@@ -206,11 +198,10 @@ for (t in sizes){
   fit <- predict(forest, newdata = x_2006[-training_set,])$predictions # prediction in test sample
   auc[auc[,1]== t,2] <- 1- mean(((log_y_2006[-training_set,])-fit)^2)/SST # store R-squared
 }
-auc[,3] <- auc[,2] - rbind(as.matrix(auc[-1,2]),auc[nrow(auc),2])
 
 # Marginal AUC
 plot(auc[,1],auc[,2],type = "o",xlab="Trees", ylab= "R-squared", main = "AUC")
-abline(a=0,b=0, col="red")
+
 
 ################################################################################
 

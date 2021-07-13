@@ -72,10 +72,11 @@ print('Data is prepared.')
 
 ########################  Training and Test Samples  ########################
 
-set.seed(???)
+set.seed(1001)
 
 # Generate variable with the rows in training data
-
+size <- floor(0.5 * nrow(juice))
+training_set <- sample(seq_len(nrow(juice)), size = size)
 
 print('Training and test samples created.')
 
@@ -166,7 +167,7 @@ print('Out-of-sample sales are predicted.')
 
 id_new <- as.matrix(new_grocery$id)
 
-# Replace ??? with your group name
+# Replace ??? with your last name
 write.csv(cbind(id_new,new_prediction),"???.csv")
 
 print('File is stored.')

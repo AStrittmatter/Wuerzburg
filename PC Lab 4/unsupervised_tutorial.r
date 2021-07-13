@@ -15,13 +15,13 @@ print('# Shares of Democrats, Republicans and one special politician')
 round(table(members$party)/nrow(members),3)
 
 # Count missing votings for each politician and plot the counts
-missings <- rowSums(votes[,(1:ncol(votes))]==0)
+missings <- rowSums(votes==0)
 
 # No. politicians who always voted
 sum(missings == 0)
 
 # Shares of missing votings
-s_missings <- missings/(ncol(votes)-1)
+s_missings <- missings/(ncol(votes))
 
 # Histogram with 100 bins
 hist(???, breaks = 100)
@@ -58,18 +58,18 @@ plot(pr.out$x[,1], pr.out$x[,2], xlab = "PC1", ylab = "PC2", col = members$party
 legend('bottomright', legend = levels(members$party), col = 1:3,  pch = 1)
 
 ## Far right (very conservative)
-head(sort(???))
+print(head(sort(???)))
 
 ## Far left (very liberal)
-head(sort(???, decreasing=???))
+print(head(sort(???, decreasing=???)))
 
 # PC 2
-head(sort(???))
+print(head(sort(???)))
 # No clear pattern based on party and state information
 
 # Look at the largest loadings in PC2 to discern an interpretation.
 loadings <- pr.out$rotation
-loadings[order(abs(loadings[,2]), decreasing=TRUE)[1:5],2]
+print(loadings[order(abs(loadings[,2]), decreasing=TRUE)[1:5],2])
 
 # Analyze voting behavior
 table(votes[,1146])
@@ -103,7 +103,7 @@ for (ind_cl in c(2:20)) {
 }
 
 plot(sse)
-# Optimum 4-5 clusters
+# Optimum 4-6 clusters
 
 # Plot the 5 clusters on the PC components graph
 set.seed(3)
@@ -114,11 +114,15 @@ plot(pr.out$x[,1], pr.out$x[,2], xlab = "PC1", ylab = "PC2", col = km.out$cluste
 legend('bottomright', legend = c("Cluster 1", "Cluster 2", "Cluster 3", "Cluster 4", "Cluster 5"), col = 1:5,  pch = 1)
 
 # Analyzing how the number of starts work
-set.seed (3)
+set.seed (1234567)
 print('With nstart = 1')
-km.out = kmeans (votes,6, nstart = ???)
+km.out = kmeans (votes,5, nstart = ???)
 km.out$tot.withinss
 
 print('With nstart = 20')
-km.out =kmeans (votes,6, nstart = ???)
+km.out =kmeans (votes,5, nstart = ???)
+km.out$tot.withinss
+
+print('With nstart = 100')
+km.out =kmeans (votes,5, nstart = ???)
 km.out$tot.withinss

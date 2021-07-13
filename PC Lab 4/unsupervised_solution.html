@@ -14336,7 +14336,7 @@ a.anchor-link {
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[21]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="nf">print</span><span class="p">(</span><span class="s">&#39;# Counts of Democrats, Republicans and one special politician&#39;</span><span class="p">)</span>
@@ -14429,7 +14429,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Count missing votings for each politician and plot the counts</span>
-<span class="n">missings</span> <span class="o">&lt;-</span> <span class="nf">rowSums</span><span class="p">(</span><span class="n">votes</span><span class="p">[,(</span><span class="m">1</span><span class="o">:</span><span class="nf">ncol</span><span class="p">(</span><span class="n">votes</span><span class="p">))]</span><span class="o">==</span><span class="m">0</span><span class="p">)</span>
+<span class="n">missings</span> <span class="o">&lt;-</span> <span class="nf">rowSums</span><span class="p">(</span><span class="n">votes</span><span class="o">==</span><span class="m">0</span><span class="p">)</span>
 
 <span class="c1"># No. politicians who always voted</span>
 <span class="nf">sum</span><span class="p">(</span><span class="n">missings</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span>
@@ -14469,7 +14469,7 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Shares of missing votings</span>
-<span class="n">s_missings</span> <span class="o">&lt;-</span> <span class="n">missings</span><span class="o">/</span><span class="p">(</span><span class="nf">ncol</span><span class="p">(</span><span class="n">votes</span><span class="p">)</span><span class="m">-1</span><span class="p">)</span>
+<span class="n">s_missings</span> <span class="o">&lt;-</span> <span class="n">missings</span><span class="o">/</span><span class="p">(</span><span class="nf">ncol</span><span class="p">(</span><span class="n">votes</span><span class="p">))</span>
 
 <span class="c1"># Histogram with 100 bins</span>
 <span class="nf">hist</span><span class="p">(</span><span class="n">s_missings</span><span class="p">,</span> <span class="n">breaks</span> <span class="o">=</span> <span class="m">100</span><span class="p">)</span>
@@ -14871,7 +14871,7 @@ AggSIIAgAQIIEiCAIAECCBIggCABAggSIIAgAQL+B1Fz1QlRPZveAAAAAElFTkSuQmCC"
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[22]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[6]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># PCA</span>
@@ -15545,7 +15545,7 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">## Far right (very conservative)</span>
-<span class="nf">head</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">pr.out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="m">1</span><span class="p">]))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">pr.out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="m">1</span><span class="p">])))</span>
 </pre></div>
 
      </div>
@@ -15564,25 +15564,13 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<dl class=dl-horizontal>
-	<dt>BROUN (R GA-10)</dt>
-		<dd>-39.3739408879417</dd>
-	<dt>FLAKE (R AZ-6)</dt>
-		<dd>-38.2506713345163</dd>
-	<dt>HENSARLIN (R TX-5)</dt>
-		<dd>-37.587059732978</dd>
-	<dt>LAMBORN (R CO-5)</dt>
-		<dd>-37.3703217908313</dd>
-	<dt>FRANKS (R AZ-2)</dt>
-		<dd>-37.2284243273724</dd>
-	<dt>FOXX (R NC-5)</dt>
-		<dd>-37.1170084904363</dd>
-</dl>
-
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>   BROUN (R GA-10)     FLAKE (R AZ-6) HENSARLIN (R TX-5)   LAMBORN (R CO-5) 
+         -39.37394          -38.25067          -37.58706          -37.37032 
+   FRANKS (R AZ-2)      FOXX (R NC-5) 
+         -37.22842          -37.11701 
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -15596,7 +15584,7 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1">## Far left (very liberal)</span>
-<span class="nf">head</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">pr.out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">pr.out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="m">1</span><span class="p">],</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)))</span>
 </pre></div>
 
      </div>
@@ -15615,25 +15603,13 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<dl class=dl-horizontal>
-	<dt>EDWARDS (D MD-4)</dt>
-		<dd>25.2915082780819</dd>
-	<dt>PRICE (D NC-4)</dt>
-		<dd>25.1591151371117</dd>
-	<dt>MATSUI (D CA-5)</dt>
-		<dd>25.1248117429693</dd>
-	<dt>SCHAKOWS (D IL-9)</dt>
-		<dd>24.9875446286478</dd>
-	<dt>HIRONO (D HI-2)</dt>
-		<dd>24.9854652871289</dd>
-	<dt>SERRANO (D NY-16)</dt>
-		<dd>24.972867617407</dd>
-</dl>
-
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre> EDWARDS (D MD-4)    PRICE (D NC-4)   MATSUI (D CA-5) SCHAKOWS (D IL-9) 
+         25.29151          25.15912          25.12481          24.98754 
+  HIRONO (D HI-2) SERRANO (D NY-16) 
+         24.98547          24.97287 
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -15653,7 +15629,7 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># PC 2</span>
-<span class="nf">head</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">pr.out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="m">2</span><span class="p">]))</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">head</span><span class="p">(</span><span class="nf">sort</span><span class="p">(</span><span class="n">pr.out</span><span class="o">$</span><span class="n">x</span><span class="p">[,</span><span class="m">2</span><span class="p">])))</span>
 <span class="c1"># No clear pattern based on party and state information</span>
 </pre></div>
 
@@ -15673,25 +15649,13 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<dl class=dl-horizontal>
-	<dt>SOLIS (D CA-32)</dt>
-		<dd>-88.3135092593956</dd>
-	<dt>GILLIBRAND (D NY-20)</dt>
-		<dd>-87.5887168745393</dd>
-	<dt>PELOSI (D CA-8)</dt>
-		<dd>-86.5358556808695</dd>
-	<dt>STUTZMAN (R IN-3)</dt>
-		<dd>-85.592173102051</dd>
-	<dt>REED (R NY-29)</dt>
-		<dd>-85.5363631936198</dd>
-	<dt>GRAVES (R GA-9)</dt>
-		<dd>-76.4965810795027</dd>
-</dl>
-
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>     SOLIS (D CA-32) GILLIBRAND (D NY-20)      PELOSI (D CA-8) 
+           -88.31351            -87.58872            -86.53586 
+   STUTZMAN (R IN-3)       REED (R NY-29)      GRAVES (R GA-9) 
+           -85.59217            -85.53636            -76.49658 
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -15706,7 +15670,7 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Look at the largest loadings in PC2 to discern an interpretation.</span>
 <span class="n">loadings</span> <span class="o">&lt;-</span> <span class="n">pr.out</span><span class="o">$</span><span class="n">rotation</span>
-<span class="n">loadings</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">loadings</span><span class="p">[,</span><span class="m">2</span><span class="p">]),</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">],</span><span class="m">2</span><span class="p">]</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">loadings</span><span class="p">[</span><span class="nf">order</span><span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">loadings</span><span class="p">[,</span><span class="m">2</span><span class="p">]),</span> <span class="n">decreasing</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)[</span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">],</span><span class="m">2</span><span class="p">])</span>
 </pre></div>
 
      </div>
@@ -15725,23 +15689,11 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-<dl class=dl-horizontal>
-	<dt>Vote.1146</dt>
-		<dd>0.0560586232119969</dd>
-	<dt>Vote.658</dt>
-		<dd>0.0546194670633868</dd>
-	<dt>Vote.1090</dt>
-		<dd>0.0530080603946947</dd>
-	<dt>Vote.1104</dt>
-		<dd>0.0516838190839037</dd>
-	<dt>Vote.1149</dt>
-		<dd>0.0515572859094995</dd>
-</dl>
-
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre> Vote.1146   Vote.658  Vote.1090  Vote.1104  Vote.1149 
+0.05605862 0.05461947 0.05300806 0.05168382 0.05155729 
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -16885,7 +16837,7 @@ AUQCUACRABRAJAAFEAlAAUQCUACRABT4HwdibkKMl78sAAAAAElFTkSuQmCC"
 <span class="p">}</span>
 
 <span class="nf">plot</span><span class="p">(</span><span class="n">sse</span><span class="p">)</span>
-<span class="c1"># Optimum 4-5 clusters</span>
+<span class="c1"># Optimum 4-6 clusters</span>
 </pre></div>
 
      </div>
@@ -17307,7 +17259,7 @@ kQAEQCQAARAJQABEAhAAkQAEQCQAARAJQID/N6A8PPoSibEAAAAASUVORK5CYII="
 </div>
 <div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><strong>d) Run a k-means clustering procedure to detect 6 clusters with nstart = 1 and nstart = 20. Print out the within cluster sum of squared errors for both nstart values. What can you say about the importance of nstart on the convergence to the global optimum?</strong></p>
+<p><strong>d) Run a k-means clustering procedure to detect 5 clusters with nstart = 1, nstart = 20, and nstart = 100. Print out the within cluster sum of squared errors for both nstart values. What can you say about the importance of nstart on the convergence to the global optimum?</strong></p>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
@@ -17317,13 +17269,17 @@ kQAEQCQAARAJQABEAhAAkQAEQCQAARAJQID/N6A8PPoSibEAAAAASUVORK5CYII="
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-r"><pre><span></span><span class="c1"># Analyzing how the number of starts work</span>
-<span class="nf">set.seed </span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+<span class="nf">set.seed </span><span class="p">(</span><span class="m">1234567</span><span class="p">)</span>
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;With nstart = 1&#39;</span><span class="p">)</span>
-<span class="n">km.out</span> <span class="o">=</span> <span class="nf">kmeans </span><span class="p">(</span><span class="n">votes</span><span class="p">,</span><span class="m">6</span><span class="p">,</span> <span class="n">nstart</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+<span class="n">km.out</span> <span class="o">=</span> <span class="nf">kmeans </span><span class="p">(</span><span class="n">votes</span><span class="p">,</span><span class="m">5</span><span class="p">,</span> <span class="n">nstart</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
 <span class="n">km.out</span><span class="o">$</span><span class="n">tot.withinss</span>
 
 <span class="nf">print</span><span class="p">(</span><span class="s">&#39;With nstart = 20&#39;</span><span class="p">)</span>
-<span class="n">km.out</span> <span class="o">=</span><span class="nf">kmeans </span><span class="p">(</span><span class="n">votes</span><span class="p">,</span><span class="m">6</span><span class="p">,</span> <span class="n">nstart</span> <span class="o">=</span> <span class="m">20</span><span class="p">)</span>
+<span class="n">km.out</span> <span class="o">=</span><span class="nf">kmeans </span><span class="p">(</span><span class="n">votes</span><span class="p">,</span><span class="m">5</span><span class="p">,</span> <span class="n">nstart</span> <span class="o">=</span> <span class="m">20</span><span class="p">)</span>
+<span class="n">km.out</span><span class="o">$</span><span class="n">tot.withinss</span>
+
+<span class="nf">print</span><span class="p">(</span><span class="s">&#39;With nstart = 100&#39;</span><span class="p">)</span>
+<span class="n">km.out</span> <span class="o">=</span><span class="nf">kmeans </span><span class="p">(</span><span class="n">votes</span><span class="p">,</span><span class="m">5</span><span class="p">,</span> <span class="n">nstart</span> <span class="o">=</span> <span class="m">100</span><span class="p">)</span>
 <span class="n">km.out</span><span class="o">$</span><span class="n">tot.withinss</span>
 </pre></div>
 
@@ -17357,7 +17313,7 @@ kQAEQCQAARAJQABEAhAAkQAEQCQAARAJQID/N6A8PPoSibEAAAAASUVORK5CYII="
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-124967.279701017
+126791.008616316
 </div>
 
 </div>
@@ -17382,7 +17338,32 @@ kQAEQCQAARAJQABEAhAAkQAEQCQAARAJQID/N6A8PPoSibEAAAAASUVORK5CYII="
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-117465.425374689
+120566.749056708
+</div>
+
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>[1] &#34;With nstart = 100&#34;
+</pre>
+</div>
+</div>
+
+<div class="jp-OutputArea-child">
+
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+120566.749056708
 </div>
 
 </div>

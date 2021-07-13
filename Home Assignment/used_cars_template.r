@@ -87,11 +87,11 @@ print('Out-of-sample sales are predicted.')
 
 id_new <- as.matrix(new_cars$id)
 
-# Replace ??? with your name
+# Replace ??? with your last name
 write.csv(cbind(id_new,new_prediction),"???.csv")
 
 print('File is stored.')
-print('Send your results to anthony.strittmatter@ensae.fr')
+print('Upload your results, code and answer to WueCampus')
 
 ################################################################
 
