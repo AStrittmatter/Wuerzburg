@@ -62,8 +62,8 @@ tree_data_2006 <-  data.frame(outcome, x_2006[training_set,])
 
 # Build shallow tree
 set.seed(1001)
-shallow_tree <- rpart(formula = outcome ~., data = tree_data_2006, method = "anova", xval = 10,
-                             y = TRUE, control = rpart.control(cp = 0.00002, minbucket=150))
+shallow_tree <- rpart(formula = outcome ~., data = tree_data_2006, method = "anova", 
+                             y = TRUE, control = rpart.control(xval = 10, cp = 0.00002, minbucket=150))
 # Note: 'minbucket=150' imposes the restriction that each terminal leave should contain at least 150 observations. 
 # The algorithm 'rpart' stops growing trees when either one leave has less than 150 observations or 
 # the MSE gain of addidng one addidtional leave is below cp=0.00002.
